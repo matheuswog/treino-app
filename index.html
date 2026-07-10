@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<title>Treino Expandido - Matheus</title>
+
+<!-- PWA / iOS -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#121212">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Treino">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="icon" href="icons/icon-192.png">
+
+<style>
+  :root {
+    --bg: #121212;
+    --card: #1c1c1c;
+    --card-border: #2c2c2c;
+    --text: #f2f2f0;
+    --muted: #9a9a94;
+    --accent: #e08a3c;
+    --accent-dim: #3a2a18;
+    --done: #4b8f5e;
+    --done-dim: #1b3020;
+    --video-bg: #2a2a3a;
+    --video-border: #4a4a6a;
+    --danger: #c0503c;
+    --safe-top: env(safe-area-inset-top, 0px);
+    --safe-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { overscroll-behavior-y: none; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    padding-bottom: calc(40px + var(--safe-bottom));
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  input, textarea { -webkit-user-select: text; user-select: text; }
+
+  header {
+    padding: calc(16px + var(--safe-top)) 16px 8px;
+    position: sticky;
+    top: 0;
+    background: var(--bg);
+    z-index: 10;
+    border-bottom: 1px solid var(--card-border);
+  }
+  header h1 { font-size: 18px; margin: 0 0 2px; font-weight: 600; }
+  header p { margin: 0; font-size: 12px; color: var(--muted); }
+  .tabs { display: flex; gap: 6px; margin-top: 12px; }
+  .tab {
+    flex: 1;
+    text-align: center;
+    padding: 10px 0;
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--muted);
+    cursor: pointer;
+    user-select: none;
+    display: block;
+  }
+  .day-content { display: none; padding: 12px 16px; }
+
+  #tab-a:checked ~ header .btn-a,
+  #tab-b:checked ~ header .btn-b,
+  #tab-c:checked ~ header .btn-c {
+    background: var(--accent);
+    color: #1a1206;
+    border-color: var(--accent);
+  }
+  #tab-a:checked ~ main #day-a,
+  #tab-b:checked ~ main #day-b,
+  #tab-c:checked ~ main #day-c {
+    display: block;
+  }
+
+  .card { margin-bottom: 10px; }
+  .card-body {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 14px;
+    transition: background .15s, border-color .15s;
+  }
+  .card-checkbox { display: none; }
+
+  .card-checkbox:checked + .card-body {
+    background: var(--done-dim);
+    border-color: var(--done);
+  }
+  .card-checkbox:checked + .card-body .custom-checkbox {
+    border-color: var(--done);
+    background: var(--done);
+    color: #fff;
+  }
+
+  .card-top { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+  .custom-checkbox {
+    width: 26px;
+    height: 26px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    border: 2px solid var(--muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    color: transparent;
+    user-select: none;
+  }
+  .ex-info { flex: 1; display: flex; flex-direction: column; gap: 2px; }
+  .ex-name { font-size: 16px; font-weight: 600; line-height: 1.3; }
+
+  .video-btn {
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--video-bg);
+    border: 1px solid var(--video-border);
+    color: #aaccff;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 11px;
+    text-decoration: none;
+    font-weight: 600;
+    margin-top: 6px;
+  }
+  .section-title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 16px 0 6px;
+    gap: 8px;
+  }
+  .section-title {
+    font-size: 13px;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    padding-left: 2px;
+    font-weight: bold;
+  }
+  .reset-day-btn {
+    font-size: 11px;
+    color: var(--muted);
+    background: transparent;
+    border: 1px solid var(--card-border);
+    border-radius: 6px;
+    padding: 4px 8px;
+    cursor: pointer;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .reset-day-btn:active { border-color: var(--danger); color: var(--danger); }
+
+  .stats { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+  .stat {
+    background: #000;
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    padding: 6px 10px;
+    font-size: 13px;
+    min-width: 60px;
+    text-align: center;
+  }
+  .stat .lbl { display: block; font-size: 10px; color: var(--muted); text-transform: uppercase; }
+  .stat .val { font-weight: 600; font-size: 14px; }
+
+  .rest-btn { cursor: pointer; user-select: none; }
+  .rest-btn.running { background: var(--accent-dim); border-color: var(--accent); }
+  .rest-btn.running .val { color: var(--accent); }
+  .rest-btn.alert { animation: flashAlert .5s ease-in-out 3; }
+  @keyframes flashAlert {
+    0%, 100% { background: var(--accent-dim); }
+    50% { background: var(--accent); }
+  }
+
+  .method { font-size: 12px; color: var(--muted); margin-top: 8px; }
+  .obs {
+    font-size: 12px;
+    color: var(--text);
+    background: #000;
+    border-left: 2px solid var(--accent);
+    padding: 6px 8px;
+    margin-top: 8px;
+    border-radius: 4px;
+  }
+  .weight-row { display: flex; align-items: center; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+  .weight-row label { font-size: 12px; color: var(--muted); }
+  .weight-row input {
+    width: 80px;
+    background: #000;
+    border: 1px solid var(--card-border);
+    border-radius: 6px;
+    color: var(--text);
+    padding: 6px 8px;
+    font-size: 14px;
+  }
+  .weight-history { font-size: 11px; color: var(--muted); margin-top: 6px; }
+  .weight-history .chip {
+    display: inline-block;
+    background: #000;
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    padding: 2px 7px;
+    margin: 2px 4px 0 0;
+  }
+  .weight-history .chip:last-child { border-color: var(--accent); color: var(--accent); }
+
+  .progress-wrap { margin-top: 10px; }
+  .progress-bar-bg {
+    height: 6px;
+    background: #000;
+    border-radius: 3px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: var(--accent);
+    width: 0%;
+    transition: width .25s ease;
+  }
+  .progress-text { font-size: 12px; color: var(--muted); margin-top: 6px; text-align: right; }
+
+  .toast {
+    position: fixed;
+    left: 50%;
+    bottom: calc(24px + var(--safe-bottom));
+    transform: translateX(-50%) translateY(20px);
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    color: var(--text);
+    padding: 10px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .2s, transform .2s;
+    z-index: 50;
+    box-shadow: 0 4px 16px rgba(0,0,0,.4);
+  }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+
+<input type="radio" id="tab-a" name="workout-tabs" checked style="display:none;">
+<input type="radio" id="tab-b" name="workout-tabs" style="display:none;">
+<input type="radio" id="tab-c" name="workout-tabs" style="display:none;">
+
+<header>
+  <h1>Treino Expandido - Matheus</h1>
+  <p>Foco: Pseudoginecomastia, Máquinas e Definição &middot; ~1h20m</p>
+  <div class="tabs">
+    <label for="tab-a" class="tab btn-a" onclick="onTabClick('A')">Seg (A)</label>
+    <label for="tab-b" class="tab btn-b" onclick="onTabClick('B')">Qua (B)</label>
+    <label for="tab-c" class="tab btn-c" onclick="onTabClick('C')">Sex (C)</label>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-bar-bg"><div class="progress-bar-fill" id="progress-bar"></div></div>
+    <div class="progress-text" id="progress">0/21 concluídos</div>
+  </div>
+</header>
+
+<main id="main">
+  <!-- os dias são renderizados via JS a partir de workoutData -->
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ===================== DADOS DO TREINO ===================== */
+var workoutData = {
+  A: {
+    title: "PEITO, OMBROS E TRÍCEPS",
+    exercises: [
+      { name: "Supino Inclinado (Halteres)", sets: 4, reps: "10-12", rest: 120, restLabel: "2 min", tip: "Foco clavicular e postura." },
+      { name: "Supino Máquina", sets: 4, reps: "10-12", rest: 120, restLabel: "2 min", tip: "Controle total das escápulas." },
+      { name: "Crucifixo Máquina (Pec Deck)", sets: 3, reps: "12-15", rest: 60, restLabel: "1 min", tip: "Pico de contração de 2s." },
+      { name: "Elevação Lateral na Polia", sets: 4, reps: "12-15", rest: 90, restLabel: "1.5 min", tip: "Sem usar o corpo (balanço)." },
+      { name: "Desenvolvimento Máquina", sets: 3, reps: "10-12", rest: 90, restLabel: "1.5 min", tip: "Controle na descida." },
+      { name: "Tríceps Corda na Polia", sets: 3, reps: "12-15", rest: 60, restLabel: "1 min", tip: "Estique todo o cotovelo no fim." },
+      { name: "Tríceps Testa (Polia)", sets: 3, reps: "12-15", rest: 60, restLabel: "1 min", tip: "Cotovelos fixos apontando pra frente." }
+    ]
+  },
+  B: {
+    title: "PERNAS E CORE",
+    exercises: [
+      { name: "Agachamento (Livre ou Smith)", sets: 4, reps: "10-12", rest: 120, restLabel: "2 min", tip: "Coluna neutra e força no calcanhar." },
+      { name: "Leg Press 45°", sets: 4, reps: "12-15", rest: 120, restLabel: "2 min", tip: "Amplitude total (joelho perto do peito)." },
+      { name: "Cadeira Extensora", sets: 3, reps: "15", rest: 90, restLabel: "1.5 min", tip: "Movimento cadenciado (subir e descer devagar)." },
+      { name: "Cadeira Flexora", sets: 4, reps: "12-15", rest: 90, restLabel: "1.5 min", tip: "Foco nos posteriores da coxa." },
+      { name: "Panturrilha Sentado", sets: 4, reps: "15-20", rest: 60, restLabel: "1 min", tip: "Segure 2s no topo do movimento." },
+      { name: "Abdominal Infra (Solo/Paralela)", sets: 3, reps: "15-20", rest: 60, restLabel: "1 min", tip: "Controle na descida das pernas." },
+      { name: "Prancha Isométrica", sets: 3, reps: "45-60s", rest: 60, restLabel: "1 min", tip: "Contraia o glúteo para estabilizar a lombar." }
+    ]
+  },
+  C: {
+    title: "COSTAS, BÍCEPS E REESTÍMULO",
+    exercises: [
+      { name: "Puxada Alta (Aberta)", sets: 4, reps: "10-12", rest: 90, restLabel: "1.5 min", tip: "Puxe com os cotovelos para baixo." },
+      { name: "Remada Baixa (Triângulo)", sets: 4, reps: "10-12", rest: 90, restLabel: "1.5 min", tip: "Peito estufado e escápulas fechadas." },
+      { name: "Face Pull na Polia", sets: 3, reps: "15-20", rest: 60, restLabel: "1 min", tip: "Puxe em direção à testa. Crucial para postura." },
+      { name: "Supino Inclinado (Reestímulo)", sets: 3, reps: "12-15", rest: 120, restLabel: "2 min", tip: "Foco estético peitoral para volume sob pseudoginecomastia." },
+      { name: "Rosca Direta (Barra W)", sets: 3, reps: "10-12", rest: 60, restLabel: "1 min", tip: "Trave o cotovelo ao lado do corpo." },
+      { name: "Rosca Martelo (Halteres)", sets: 3, reps: "10-12", rest: 60, restLabel: "1 min", tip: "Pegada neutra para densidade do braço." },
+      { name: "Rosca Scott (Máquina)", sets: 3, reps: "12-15", rest: 60, restLabel: "1 min", tip: "Não estenda 100% o braço no fim (proteja o tendão)." }
+    ]
+  }
+};
+
+var DAY_ORDER = ["A", "B", "C"];
+
+function videoUrl(name) {
+  var q = name.replace(/[()°]/g, "").trim().replace(/\s+/g, "+");
+  return "https://www.youtube.com/results?search_query=" + q + "+execucao+perfeita";
+}
+
+/* ===================== RENDER ===================== */
+function renderDay(day) {
+  var d = workoutData[day];
+  var html = '<div class="section-title-row">' +
+      '<div class="section-title">' + d.title + '</div>' +
+      '<button type="button" class="reset-day-btn" onclick="resetDay(\'' + day + '\')">Resetar dia</button>' +
+    '</div>';
+
+  d.exercises.forEach(function (ex, idx) {
+    var id = day + '-' + idx;
+    html += '' +
+      '<div class="card">' +
+        '<input type="checkbox" id="check-' + id + '" class="card-checkbox" onchange="toggleDone(\'' + day + '\', ' + idx + ')">' +
+        '<div class="card-body">' +
+          '<label for="check-' + id + '" class="card-top">' +
+            '<span class="custom-checkbox">&#10003;</span>' +
+            '<div class="ex-info">' +
+              '<span class="ex-name">' + ex.name + '</span>' +
+              '<a href="' + videoUrl(ex.name) + '" target="_blank" rel="noopener" class="video-btn">🎥 Ver Execução</a>' +
+            '</div>' +
+          '</label>' +
+          '<div class="stats">' +
+            '<div class="stat"><span class="lbl">Séries</span><span class="val">' + ex.sets + '</span></div>' +
+            '<div class="stat"><span class="lbl">Reps</span><span class="val">' + ex.reps + '</span></div>' +
+            '<div class="stat rest-btn" id="rest-' + id + '" onclick="startRest(\'' + day + '\', ' + idx + ', ' + ex.rest + ', \'' + ex.restLabel + '\')">' +
+              '<span class="lbl">Descanso</span><span class="val">' + ex.restLabel + '</span>' +
+            '</div>' +
+          '</div>' +
+          '<div class="obs">Dica: ' + ex.tip + '</div>' +
+          '<div class="weight-row">' +
+            '<label>Peso (kg):</label>' +
+            '<input type="text" id="weight-' + id + '" inputmode="decimal" placeholder="kg" onchange="saveWeight(\'' + day + '\', ' + idx + ', this.value)">' +
+          '</div>' +
+          '<div class="weight-history" id="hist-' + id + '"></div>' +
+        '</div>' +
+      '</div>';
+  });
+  return html;
+}
+
+function renderAll() {
+  var main = document.getElementById('main');
+  var out = '';
+  DAY_ORDER.forEach(function (day) {
+    out += '<div id="day-' + day.toLowerCase() + '" class="day-content">' + renderDay(day) + '</div>';
+  });
+  main.innerHTML = out;
+}
+
+/* ===================== ESTADO / PERSISTÊNCIA ===================== */
+var STORAGE_KEY = 'treino-state-expandido-matheus-v2';
+var state = { done: {}, weight: {}, history: {} };
+
+function persist() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) {}
+}
+
+function migrateOldState() {
+  try {
+    var old = localStorage.getItem('treino-state-expandido-matheus');
+    if (!old) return;
+    var oldState = JSON.parse(old);
+    Object.keys(oldState).forEach(function (key) {
+      var parts = key.split('-');
+      if (parts.length === 3) {
+        var day = parts[0], idx = parts[1], type = parts[2];
+        var id = day + '-' + idx;
+        if (type === 'done') state.done[id] = oldState[key];
+        else if (type === 'weight') state.weight[id] = oldState[key];
+      }
+    });
+    persist();
+  } catch (e) {}
+}
+
+function loadState() {
+  try {
+    var raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      var parsed = JSON.parse(raw);
+      state.done = parsed.done || {};
+      state.weight = parsed.weight || {};
+      state.history = parsed.history || {};
+    } else {
+      migrateOldState();
+    }
+  } catch (e) {}
+
+  DAY_ORDER.forEach(function (day) {
+    workoutData[day].exercises.forEach(function (ex, idx) {
+      var id = day + '-' + idx;
+      var cb = document.getElementById('check-' + id);
+      if (cb) cb.checked = !!state.done[id];
+      var inp = document.getElementById('weight-' + id);
+      if (inp && state.weight[id]) inp.value = state.weight[id];
+      renderHistory(id);
+    });
+  });
+
+  updateProgress(currentDay());
+}
+
+/* ===================== INTERAÇÕES ===================== */
+function currentDay() {
+  var active = document.querySelector('input[name="workout-tabs"]:checked');
+  return active ? active.id.replace('tab-', '').toUpperCase() : 'A';
+}
+
+function onTabClick(day) {
+  setTimeout(function () { updateProgress(day); }, 0);
+}
+
+function updateProgress(day) {
+  var exercises = workoutData[day].exercises;
+  var done = 0;
+  exercises.forEach(function (ex, idx) {
+    if (state.done[day + '-' + idx]) done++;
+  });
+  var total = exercises.length;
+  var pct = total ? (done / total) * 100 : 0;
+  document.getElementById('progress').textContent = done + '/' + total + ' concluídos';
+  document.getElementById('progress-bar').style.width = pct + '%';
+}
+
+function toggleDone(day, idx) {
+  var id = day + '-' + idx;
+  var cb = document.getElementById('check-' + id);
+  state.done[id] = cb.checked;
+  updateProgress(day);
+  persist();
+}
+
+function resetDay(day) {
+  if (!confirm('Resetar todas as marcações do dia ' + day + '? O histórico de pesos é mantido.')) return;
+  workoutData[day].exercises.forEach(function (ex, idx) {
+    var id = day + '-' + idx;
+    state.done[id] = false;
+    var cb = document.getElementById('check-' + id);
+    if (cb) cb.checked = false;
+  });
+  updateProgress(day);
+  persist();
+  showToast('Dia ' + day + ' resetado');
+}
+
+function saveWeight(day, idx, val) {
+  var id = day + '-' + idx;
+  val = (val || '').trim();
+  state.weight[id] = val;
+  if (val) {
+    var hist = state.history[id] || [];
+    var last = hist[hist.length - 1];
+    if (!last || last.v !== val) {
+      hist.push({ v: val, d: todayLabel() });
+      if (hist.length > 5) hist = hist.slice(hist.length - 5);
+      state.history[id] = hist;
+    }
+  }
+  renderHistory(id);
+  persist();
+}
+
+function todayLabel() {
+  var d = new Date();
+  var dd = String(d.getDate()).padStart(2, '0');
+  var mm = String(d.getMonth() + 1).padStart(2, '0');
+  return dd + '/' + mm;
+}
+
+function renderHistory(id) {
+  var el = document.getElementById('hist-' + id);
+  if (!el) return;
+  var hist = state.history[id] || [];
+  if (!hist.length) { el.innerHTML = ''; return; }
+  el.innerHTML = hist.map(function (h) {
+    return '<span class="chip">' + h.v + 'kg &middot; ' + h.d + '</span>';
+  }).join('');
+}
+
+/* ===================== TIMER DE DESCANSO ===================== */
+var restTimers = {};
+
+function beep() {
+  try {
+    var Ctx = window.AudioContext || window.webkitAudioContext;
+    if (!Ctx) return;
+    var ctx = new Ctx();
+    [0, 220, 440].forEach(function (delay) {
+      setTimeout(function () {
+        var osc = ctx.createOscillator();
+        var gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.value = 880;
+        gain.gain.setValueAtTime(0.0001, ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.3, ctx.currentTime + 0.02);
+        gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.18);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start();
+        osc.stop(ctx.currentTime + 0.2);
+      }, delay);
+    });
+  } catch (e) {}
+}
+
+function startRest(day, idx, seconds, defaultDesc) {
+  requestWakeLock();
+  if (!seconds) return;
+  var elId = 'rest-' + day + '-' + idx;
+  var el = document.getElementById(elId);
+  if (restTimers[elId]) {
+    clearInterval(restTimers[elId]);
+    delete restTimers[elId];
+    el.classList.remove('running');
+    el.querySelector('.val').textContent = defaultDesc;
+    return;
+  }
+  var remaining = seconds;
+  el.classList.add('running');
+  var valEl = el.querySelector('.val');
+  valEl.textContent = formatTime(remaining);
+  restTimers[elId] = setInterval(function () {
+    remaining--;
+    if (remaining <= 0) {
+      clearInterval(restTimers[elId]);
+      delete restTimers[elId];
+      el.classList.remove('running');
+      el.classList.add('alert');
+      valEl.textContent = defaultDesc;
+      beep();
+      if (navigator.vibrate) navigator.vibrate([200, 100, 200]);
+      setTimeout(function () { el.classList.remove('alert'); }, 1600);
+    } else {
+      valEl.textContent = formatTime(remaining);
+    }
+  }, 1000);
+}
+
+function formatTime(s) {
+  var m = Math.floor(s / 60);
+  var sec = s % 60;
+  return m > 0 ? m + ':' + (sec < 10 ? '0' + sec : sec) : sec + 's';
+}
+
+/* ===================== WAKE LOCK ===================== */
+var wakeLock = null;
+function requestWakeLock() {
+  if (!('wakeLock' in navigator) || wakeLock) return;
+  navigator.wakeLock.request('screen').then(function (lock) {
+    wakeLock = lock;
+    wakeLock.addEventListener('release', function () { wakeLock = null; });
+  }).catch(function () {});
+}
+document.addEventListener('visibilitychange', function () {
+  if (document.visibilityState === 'visible' && wakeLock === null) requestWakeLock();
+});
+
+/* ===================== TOAST ===================== */
+var toastTimer = null;
+function showToast(msg) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(function () { t.classList.remove('show'); }, 1800);
+}
+
+/* ===================== SWIPE ENTRE DIAS ===================== */
+(function () {
+  var startX = 0, startY = 0, tracking = false;
+  var main = document.getElementById('main');
+  main.addEventListener('touchstart', function (e) {
+    startX = e.touches[0].clientX;
+    startY = e.touches[0].clientY;
+    tracking = true;
+  }, { passive: true });
+  main.addEventListener('touchend', function (e) {
+    if (!tracking) return;
+    tracking = false;
+    var dx = e.changedTouches[0].clientX - startX;
+    var dy = e.changedTouches[0].clientY - startY;
+    if (Math.abs(dx) < 60 || Math.abs(dx) < Math.abs(dy) * 1.5) return;
+    var idx = DAY_ORDER.indexOf(currentDay());
+    var nextIdx = dx < 0 ? idx + 1 : idx - 1;
+    if (nextIdx < 0 || nextIdx >= DAY_ORDER.length) return;
+    var nextDay = DAY_ORDER[nextIdx];
+    document.getElementById('tab-' + nextDay.toLowerCase()).checked = true;
+    updateProgress(nextDay);
+  }, { passive: true });
+})();
+
+/* ===================== SERVICE WORKER ===================== */
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', function () {
+    navigator.serviceWorker.register('sw.js').catch(function () {});
+  });
+}
+
+/* ===================== INIT ===================== */
+renderAll();
+loadState();
+document.body.addEventListener('click', function initWakeLockOnce() {
+  requestWakeLock();
+  document.body.removeEventListener('click', initWakeLockOnce);
+}, { once: true });
+</script>
+</body>
+</html>
