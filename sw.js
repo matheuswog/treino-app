@@ -1,11 +1,31 @@
-const CACHE_NAME = 'treino-matheus-v1';
+const CACHE_NAME = 'treino-matheus-v4';
 const ASSETS = [
   './',
   './index.html',
   './manifest.json',
   './icons/icon-192.png',
   './icons/icon-512.png',
-  './icons/apple-touch-icon.png'
+  './icons/apple-touch-icon.png',
+  './img/supino-inclinado.jpg',
+  './img/supino-maquina.jpg',
+  './img/pec-deck.jpg',
+  './img/elevacao-lateral.jpg',
+  './img/desenvolvimento.jpg',
+  './img/triceps-corda.jpg',
+  './img/triceps-testa.jpg',
+  './img/agachamento.jpg',
+  './img/leg-press.jpg',
+  './img/extensora.jpg',
+  './img/flexora.jpg',
+  './img/panturrilha.jpg',
+  './img/abdominal.jpg',
+  './img/prancha.jpg',
+  './img/puxada-alta.jpg',
+  './img/remada-baixa.jpg',
+  './img/face-pull.jpg',
+  './img/rosca-direta.jpg',
+  './img/rosca-martelo.jpg',
+  './img/rosca-scott.jpg'
 ];
 
 self.addEventListener('install', function (event) {

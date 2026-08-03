@@ -85,30 +85,66 @@
     display: block;
   }
 
-  .card { margin-bottom: 10px; }
+  .card { margin-bottom: 8px; }
   .card-body {
     background: var(--card);
     border: 1px solid var(--card-border);
     border-radius: 12px;
-    padding: 14px;
-    transition: background .15s, border-color .15s;
+    padding: 10px;
+    transition: background .15s, border-color .15s, box-shadow .15s;
+  }
+  .card.is-open .card-body {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 1px var(--accent-dim);
   }
   .card-checkbox { display: none; }
 
   .card-checkbox:checked + .card-body {
     background: var(--done-dim);
     border-color: var(--done);
+    box-shadow: none;
   }
   .card-checkbox:checked + .card-body .custom-checkbox {
     border-color: var(--done);
     background: var(--done);
     color: #fff;
   }
+  .card-checkbox:checked + .card-body .ex-name {
+    text-decoration: line-through;
+    color: var(--muted);
+  }
 
-  .card-top { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+  .card-top {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+  }
+  .ex-thumb {
+    width: 56px;
+    height: 42px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #2a2a2a;
+    border: 1px solid var(--card-border);
+    padding: 0;
+    cursor: zoom-in;
+  }
+  .ex-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+  }
+  .card.is-open .ex-thumb {
+    width: 80px;
+    height: 60px;
+  }
   .custom-checkbox {
-    width: 26px;
-    height: 26px;
+    width: 28px;
+    height: 28px;
     flex-shrink: 0;
     border-radius: 50%;
     border: 2px solid var(--muted);
@@ -119,29 +155,77 @@
     color: transparent;
     user-select: none;
   }
-  .ex-info { flex: 1; display: flex; flex-direction: column; gap: 2px; }
-  .ex-name { font-size: 16px; font-weight: 600; line-height: 1.3; }
+  .ex-info { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+  .ex-name { font-size: 15px; font-weight: 600; line-height: 1.25; }
+  .ex-meta {
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 500;
+  }
+  .expand-chevron {
+    color: var(--muted);
+    font-size: 12px;
+    transition: transform .2s;
+    flex-shrink: 0;
+  }
+  .card.is-open .expand-chevron { transform: rotate(180deg); color: var(--accent); }
 
+  .card-details {
+    display: none;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--card-border);
+    animation: fadeSlide .2s ease;
+  }
+  .card.is-open .card-details { display: block; }
+  @keyframes fadeSlide {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .ex-preview {
+    width: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #2a2a2a;
+    border: 1px solid var(--card-border);
+    margin-bottom: 10px;
+    cursor: zoom-in;
+  }
+  .ex-preview img {
+    width: 100%;
+    height: auto;
+    max-height: 240px;
+    object-fit: contain;
+    display: block;
+    background: #1a1a1a;
+  }
+
+  .detail-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+  }
   .video-btn {
-    align-self: flex-start;
     display: inline-flex;
     align-items: center;
     gap: 4px;
     background: var(--video-bg);
     border: 1px solid var(--video-border);
     color: #aaccff;
-    padding: 4px 10px;
+    padding: 6px 12px;
     border-radius: 6px;
-    font-size: 11px;
+    font-size: 12px;
     text-decoration: none;
     font-weight: 600;
-    margin-top: 6px;
   }
+
   .section-title-row {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 16px 0 6px;
+    margin: 8px 0 10px;
     gap: 8px;
   }
   .section-title {
@@ -165,7 +249,7 @@
   }
   .reset-day-btn:active { border-color: var(--danger); color: var(--danger); }
 
-  .stats { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+  .stats { display: flex; flex-wrap: wrap; gap: 8px; }
   .stat {
     background: #000;
     border: 1px solid var(--card-border);
@@ -187,7 +271,6 @@
     50% { background: var(--accent); }
   }
 
-  .method { font-size: 12px; color: var(--muted); margin-top: 8px; }
   .obs {
     font-size: 12px;
     color: var(--text);
@@ -252,6 +335,49 @@
     box-shadow: 0 4px 16px rgba(0,0,0,.4);
   }
   .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  /* Lightbox */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.88);
+    z-index: 100;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 16px calc(24px + var(--safe-bottom));
+    flex-direction: column;
+    gap: 12px;
+  }
+  .lightbox.show { display: flex; }
+  .lightbox img {
+    max-width: 100%;
+    max-height: 55vh;
+    border-radius: 12px;
+    background: #1f1f1f;
+  }
+  .lightbox-title {
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+  }
+  .lightbox-tip {
+    font-size: 13px;
+    color: var(--muted);
+    text-align: center;
+    max-width: 320px;
+  }
+  .lightbox-close {
+    margin-top: 4px;
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    color: var(--text);
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+  }
 </style>
 </head>
 <body>
@@ -280,43 +406,51 @@
 
 <div class="toast" id="toast"></div>
 
+<div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+  <img id="lightbox-img" src="" alt="">
+  <div class="lightbox-title" id="lightbox-title"></div>
+  <div class="lightbox-tip" id="lightbox-tip"></div>
+  <a id="lightbox-video" class="video-btn" href="#" target="_blank" rel="noopener">Ver execução no YouTube</a>
+  <button type="button" class="lightbox-close" onclick="hideLightbox()">Fechar</button>
+</div>
+
 <script>
 /* ===================== DADOS DO TREINO ===================== */
 var workoutData = {
   A: {
     title: "PEITO, OMBROS E TRÍCEPS",
     exercises: [
-      { name: "Supino Inclinado (Halteres)", sets: 4, reps: "10-12", rest: 120, restLabel: "2 min", tip: "Foco clavicular e postura." },
-      { name: "Supino Máquina", sets: 4, reps: "10-12", rest: 120, restLabel: "2 min", tip: "Controle total das escápulas." },
-      { name: "Crucifixo Máquina (Pec Deck)", sets: 3, reps: "12-15", rest: 60, restLabel: "1 min", tip: "Pico de contração de 2s." },
-      { name: "Elevação Lateral na Polia", sets: 4, reps: "12-15", rest: 90, restLabel: "1.5 min", tip: "Sem usar o corpo (balanço)." },
-      { name: "Desenvolvimento Máquina", sets: 3, reps: "10-12", rest: 90, restLabel: "1.5 min", tip: "Controle na descida." },
-      { name: "Tríceps Corda na Polia", sets: 3, reps: "12-15", rest: 60, restLabel: "1 min", tip: "Estique todo o cotovelo no fim." },
-      { name: "Tríceps Testa (Polia)", sets: 3, reps: "12-15", rest: 60, restLabel: "1 min", tip: "Cotovelos fixos apontando pra frente." }
+      { name: "Supino Inclinado (Halteres)", img: "img/supino-inclinado.jpg", sets: 4, reps: "10-12", rest: 120, restLabel: "2 min", tip: "Foco clavicular e postura." },
+      { name: "Supino Máquina", img: "img/supino-maquina.jpg", sets: 4, reps: "10-12", rest: 120, restLabel: "2 min", tip: "Controle total das escápulas." },
+      { name: "Crucifixo Máquina (Pec Deck)", img: "img/pec-deck.jpg", sets: 3, reps: "12-15", rest: 60, restLabel: "1 min", tip: "Pico de contração de 2s." },
+      { name: "Elevação Lateral na Polia", img: "img/elevacao-lateral.jpg", sets: 4, reps: "12-15", rest: 90, restLabel: "1.5 min", tip: "Sem usar o corpo (balanço)." },
+      { name: "Desenvolvimento Máquina", img: "img/desenvolvimento.jpg", sets: 3, reps: "10-12", rest: 90, restLabel: "1.5 min", tip: "Controle na descida." },
+      { name: "Tríceps Corda na Polia", img: "img/triceps-corda.jpg", sets: 3, reps: "12-15", rest: 60, restLabel: "1 min", tip: "Estique todo o cotovelo no fim." },
+      { name: "Tríceps Testa (Polia)", img: "img/triceps-testa.jpg", sets: 3, reps: "12-15", rest: 60, restLabel: "1 min", tip: "Cotovelos fixos apontando pra frente." }
     ]
   },
   B: {
     title: "PERNAS E CORE",
     exercises: [
-      { name: "Agachamento (Livre ou Smith)", sets: 4, reps: "10-12", rest: 120, restLabel: "2 min", tip: "Coluna neutra e força no calcanhar." },
-      { name: "Leg Press 45°", sets: 4, reps: "12-15", rest: 120, restLabel: "2 min", tip: "Amplitude total (joelho perto do peito)." },
-      { name: "Cadeira Extensora", sets: 3, reps: "15", rest: 90, restLabel: "1.5 min", tip: "Movimento cadenciado (subir e descer devagar)." },
-      { name: "Cadeira Flexora", sets: 4, reps: "12-15", rest: 90, restLabel: "1.5 min", tip: "Foco nos posteriores da coxa." },
-      { name: "Panturrilha Sentado", sets: 4, reps: "15-20", rest: 60, restLabel: "1 min", tip: "Segure 2s no topo do movimento." },
-      { name: "Abdominal Infra (Solo/Paralela)", sets: 3, reps: "15-20", rest: 60, restLabel: "1 min", tip: "Controle na descida das pernas." },
-      { name: "Prancha Isométrica", sets: 3, reps: "45-60s", rest: 60, restLabel: "1 min", tip: "Contraia o glúteo para estabilizar a lombar." }
+      { name: "Agachamento (Livre ou Smith)", img: "img/agachamento.jpg", sets: 4, reps: "10-12", rest: 120, restLabel: "2 min", tip: "Coluna neutra e força no calcanhar." },
+      { name: "Leg Press 45°", img: "img/leg-press.jpg", sets: 4, reps: "12-15", rest: 120, restLabel: "2 min", tip: "Amplitude total (joelho perto do peito)." },
+      { name: "Cadeira Extensora", img: "img/extensora.jpg", sets: 3, reps: "15", rest: 90, restLabel: "1.5 min", tip: "Movimento cadenciado (subir e descer devagar)." },
+      { name: "Cadeira Flexora", img: "img/flexora.jpg", sets: 4, reps: "12-15", rest: 90, restLabel: "1.5 min", tip: "Foco nos posteriores da coxa." },
+      { name: "Panturrilha Sentado", img: "img/panturrilha.jpg", sets: 4, reps: "15-20", rest: 60, restLabel: "1 min", tip: "Segure 2s no topo do movimento." },
+      { name: "Abdominal Infra (Solo/Paralela)", img: "img/abdominal.jpg", sets: 3, reps: "15-20", rest: 60, restLabel: "1 min", tip: "Controle na descida das pernas." },
+      { name: "Prancha Isométrica", img: "img/prancha.jpg", sets: 3, reps: "45-60s", rest: 60, restLabel: "1 min", tip: "Contraia o glúteo para estabilizar a lombar." }
     ]
   },
   C: {
     title: "COSTAS, BÍCEPS E REESTÍMULO",
     exercises: [
-      { name: "Puxada Alta (Aberta)", sets: 4, reps: "10-12", rest: 90, restLabel: "1.5 min", tip: "Puxe com os cotovelos para baixo." },
-      { name: "Remada Baixa (Triângulo)", sets: 4, reps: "10-12", rest: 90, restLabel: "1.5 min", tip: "Peito estufado e escápulas fechadas." },
-      { name: "Face Pull na Polia", sets: 3, reps: "15-20", rest: 60, restLabel: "1 min", tip: "Puxe em direção à testa. Crucial para postura." },
-      { name: "Supino Inclinado (Reestímulo)", sets: 3, reps: "12-15", rest: 120, restLabel: "2 min", tip: "Foco estético peitoral para volume sob pseudoginecomastia." },
-      { name: "Rosca Direta (Barra W)", sets: 3, reps: "10-12", rest: 60, restLabel: "1 min", tip: "Trave o cotovelo ao lado do corpo." },
-      { name: "Rosca Martelo (Halteres)", sets: 3, reps: "10-12", rest: 60, restLabel: "1 min", tip: "Pegada neutra para densidade do braço." },
-      { name: "Rosca Scott (Máquina)", sets: 3, reps: "12-15", rest: 60, restLabel: "1 min", tip: "Não estenda 100% o braço no fim (proteja o tendão)." }
+      { name: "Puxada Alta (Aberta)", img: "img/puxada-alta.jpg", sets: 4, reps: "10-12", rest: 90, restLabel: "1.5 min", tip: "Puxe com os cotovelos para baixo." },
+      { name: "Remada Baixa (Triângulo)", img: "img/remada-baixa.jpg", sets: 4, reps: "10-12", rest: 90, restLabel: "1.5 min", tip: "Peito estufado e escápulas fechadas." },
+      { name: "Face Pull na Polia", img: "img/face-pull.jpg", sets: 3, reps: "15-20", rest: 60, restLabel: "1 min", tip: "Puxe em direção à testa. Crucial para postura." },
+      { name: "Supino Inclinado (Reestímulo)", img: "img/supino-inclinado.jpg", sets: 3, reps: "12-15", rest: 120, restLabel: "2 min", tip: "Foco estético peitoral para volume sob pseudoginecomastia." },
+      { name: "Rosca Direta (Barra W)", img: "img/rosca-direta.jpg", sets: 3, reps: "10-12", rest: 60, restLabel: "1 min", tip: "Trave o cotovelo ao lado do corpo." },
+      { name: "Rosca Martelo (Halteres)", img: "img/rosca-martelo.jpg", sets: 3, reps: "10-12", rest: 60, restLabel: "1 min", tip: "Pegada neutra para densidade do braço." },
+      { name: "Rosca Scott (Máquina)", img: "img/rosca-scott.jpg", sets: 3, reps: "12-15", rest: 60, restLabel: "1 min", tip: "Não estenda 100% o braço no fim (proteja o tendão)." }
     ]
   }
 };
@@ -326,6 +460,14 @@ var DAY_ORDER = ["A", "B", "C"];
 function videoUrl(name) {
   var q = name.replace(/[()°]/g, "").trim().replace(/\s+/g, "+");
   return "https://www.youtube.com/results?search_query=" + q + "+execucao+perfeita";
+}
+
+function esc(str) {
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;")
+    .replace(/</g, "&lt;");
 }
 
 /* ===================== RENDER ===================== */
@@ -338,30 +480,44 @@ function renderDay(day) {
 
   d.exercises.forEach(function (ex, idx) {
     var id = day + '-' + idx;
+    var tipAttr = esc(ex.tip);
+    var nameAttr = esc(ex.name);
     html += '' +
-      '<div class="card">' +
+      '<div class="card" id="card-' + id + '">' +
         '<input type="checkbox" id="check-' + id + '" class="card-checkbox" onchange="toggleDone(\'' + day + '\', ' + idx + ')">' +
         '<div class="card-body">' +
-          '<label for="check-' + id + '" class="card-top">' +
-            '<span class="custom-checkbox">&#10003;</span>' +
+          '<div class="card-top" onclick="toggleCard(\'' + day + '\', ' + idx + ', event)">' +
+            '<button type="button" class="ex-thumb" aria-label="Ampliar imagem" onclick="openLightbox(\'' + day + '\', ' + idx + ', event)">' +
+              '<img src="' + ex.img + '" alt="' + nameAttr + '" loading="lazy">' +
+            '</button>' +
             '<div class="ex-info">' +
               '<span class="ex-name">' + ex.name + '</span>' +
-              '<a href="' + videoUrl(ex.name) + '" target="_blank" rel="noopener" class="video-btn">🎥 Ver Execução</a>' +
+              '<span class="ex-meta">' + ex.sets + ' séries · ' + ex.reps + ' reps · ' + ex.restLabel + '</span>' +
             '</div>' +
-          '</label>' +
-          '<div class="stats">' +
-            '<div class="stat"><span class="lbl">Séries</span><span class="val">' + ex.sets + '</span></div>' +
-            '<div class="stat"><span class="lbl">Reps</span><span class="val">' + ex.reps + '</span></div>' +
-            '<div class="stat rest-btn" id="rest-' + id + '" onclick="startRest(\'' + day + '\', ' + idx + ', ' + ex.rest + ', \'' + ex.restLabel + '\')">' +
-              '<span class="lbl">Descanso</span><span class="val">' + ex.restLabel + '</span>' +
+            '<label for="check-' + id + '" class="custom-checkbox" onclick="event.stopPropagation()">&#10003;</label>' +
+            '<span class="expand-chevron">▼</span>' +
+          '</div>' +
+          '<div class="card-details">' +
+            '<button type="button" class="ex-preview" onclick="openLightbox(\'' + day + '\', ' + idx + ', event)">' +
+              '<img src="' + ex.img + '" alt="' + nameAttr + '" loading="lazy">' +
+            '</button>' +
+            '<div class="detail-actions">' +
+              '<a href="' + videoUrl(ex.name) + '" target="_blank" rel="noopener" class="video-btn" onclick="event.stopPropagation()">Ver execução</a>' +
             '</div>' +
+            '<div class="stats">' +
+              '<div class="stat"><span class="lbl">Séries</span><span class="val">' + ex.sets + '</span></div>' +
+              '<div class="stat"><span class="lbl">Reps</span><span class="val">' + ex.reps + '</span></div>' +
+              '<div class="stat rest-btn" id="rest-' + id + '" onclick="startRest(\'' + day + '\', ' + idx + ', ' + ex.rest + ', \'' + ex.restLabel + '\')">' +
+                '<span class="lbl">Descanso</span><span class="val">' + ex.restLabel + '</span>' +
+              '</div>' +
+            '</div>' +
+            '<div class="obs">Dica: ' + tipAttr + '</div>' +
+            '<div class="weight-row">' +
+              '<label for="weight-' + id + '">Peso (kg):</label>' +
+              '<input type="text" id="weight-' + id + '" inputmode="decimal" placeholder="kg" onchange="saveWeight(\'' + day + '\', ' + idx + ', this.value)">' +
+            '</div>' +
+            '<div class="weight-history" id="hist-' + id + '"></div>' +
           '</div>' +
-          '<div class="obs">Dica: ' + ex.tip + '</div>' +
-          '<div class="weight-row">' +
-            '<label>Peso (kg):</label>' +
-            '<input type="text" id="weight-' + id + '" inputmode="decimal" placeholder="kg" onchange="saveWeight(\'' + day + '\', ' + idx + ', this.value)">' +
-          '</div>' +
-          '<div class="weight-history" id="hist-' + id + '"></div>' +
         '</div>' +
       '</div>';
   });
@@ -428,7 +584,80 @@ function loadState() {
   });
 
   updateProgress(currentDay());
+  openNextIncomplete(currentDay());
 }
+
+/* ===================== CARDS COMPACTOS ===================== */
+function toggleCard(day, idx, event) {
+  if (event && event.target.closest && (
+    event.target.closest('.custom-checkbox') ||
+    event.target.closest('.ex-thumb') ||
+    event.target.closest('a') ||
+    event.target.closest('input') ||
+    event.target.closest('.rest-btn')
+  )) return;
+
+  var id = day + '-' + idx;
+  var card = document.getElementById('card-' + id);
+  if (!card) return;
+  var wasOpen = card.classList.contains('is-open');
+  closeAllCards(day);
+  if (!wasOpen) {
+    card.classList.add('is-open');
+    card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+}
+
+function closeAllCards(day) {
+  var root = document.getElementById('day-' + day.toLowerCase());
+  if (!root) return;
+  root.querySelectorAll('.card.is-open').forEach(function (c) {
+    c.classList.remove('is-open');
+  });
+}
+
+function openNextIncomplete(day) {
+  closeAllCards(day);
+  var exercises = workoutData[day].exercises;
+  for (var i = 0; i < exercises.length; i++) {
+    if (!state.done[day + '-' + i]) {
+      var card = document.getElementById('card-' + day + '-' + i);
+      if (card) {
+        card.classList.add('is-open');
+        setTimeout(function () {
+          card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }, 50);
+      }
+      return;
+    }
+  }
+}
+
+/* ===================== LIGHTBOX ===================== */
+function openLightbox(day, idx, event) {
+  if (event) event.stopPropagation();
+  var ex = workoutData[day].exercises[idx];
+  if (!ex) return;
+  document.getElementById('lightbox-img').src = ex.img;
+  document.getElementById('lightbox-img').alt = ex.name;
+  document.getElementById('lightbox-title').textContent = ex.name;
+  document.getElementById('lightbox-tip').textContent = 'Dica: ' + ex.tip;
+  var vid = document.getElementById('lightbox-video');
+  vid.href = videoUrl(ex.name);
+  document.getElementById('lightbox').classList.add('show');
+}
+
+function hideLightbox() {
+  document.getElementById('lightbox').classList.remove('show');
+}
+
+function closeLightbox(event) {
+  if (event.target.id === 'lightbox') hideLightbox();
+}
+
+document.addEventListener('keydown', function (e) {
+  if (e.key === 'Escape') hideLightbox();
+});
 
 /* ===================== INTERAÇÕES ===================== */
 function currentDay() {
@@ -437,7 +666,10 @@ function currentDay() {
 }
 
 function onTabClick(day) {
-  setTimeout(function () { updateProgress(day); }, 0);
+  setTimeout(function () {
+    updateProgress(day);
+    openNextIncomplete(day);
+  }, 0);
 }
 
 function updateProgress(day) {
@@ -458,6 +690,10 @@ function toggleDone(day, idx) {
   state.done[id] = cb.checked;
   updateProgress(day);
   persist();
+  if (cb.checked) {
+    if (navigator.vibrate) navigator.vibrate(30);
+    openNextIncomplete(day);
+  }
 }
 
 function resetDay(day) {
@@ -470,6 +706,7 @@ function resetDay(day) {
   });
   updateProgress(day);
   persist();
+  openNextIncomplete(day);
   showToast('Dia ' + day + ' resetado');
 }
 
@@ -616,6 +853,7 @@ function showToast(msg) {
     var nextDay = DAY_ORDER[nextIdx];
     document.getElementById('tab-' + nextDay.toLowerCase()).checked = true;
     updateProgress(nextDay);
+    openNextIncomplete(nextDay);
   }, { passive: true });
 })();
 
