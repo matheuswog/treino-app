@@ -253,14 +253,16 @@ body.timing .sheet-body { padding-bottom: calc(190px + env(safe-area-inset-botto
 
 /* ---------- timer ---------- */
 .timer {
-  position: fixed; z-index: 60; left: 50%; transform: translate(-50%, 140%);
+  position: fixed; z-index: 60; left: 50%;
+  transform: translate(-50%, calc(100% + 40px + env(safe-area-inset-bottom, 0px)));
+  visibility: hidden;
   bottom: calc(16px + env(safe-area-inset-bottom, 0px));
   width: min(488px, calc(100% - 32px));
   background: var(--fg); color: var(--bg); border-radius: 22px; box-shadow: var(--shadow);
   padding: 10px 10px 10px 12px; display: flex; align-items: center; gap: 12px;
-  transition: transform .25s cubic-bezier(.2,.8,.2,1);
+  transition: transform .25s cubic-bezier(.2,.8,.2,1), visibility 0s linear .25s;
 }
-.timer.show { transform: translate(-50%, 0); }
+.timer.show { transform: translate(-50%, 0); visibility: visible; transition: transform .25s cubic-bezier(.2,.8,.2,1), visibility 0s; }
 .timer.ending { animation: pulse 1s ease-in-out infinite; }
 @keyframes pulse { 50% { box-shadow: 0 0 0 6px var(--accent-soft), var(--shadow); } }
 .timer .tring { position: relative; width: 46px; height: 46px; flex-shrink: 0; }
