@@ -1,44 +1,53 @@
-# Plano de Treino: Hipertrofia 5x/semana (ênfase em peitoral)
+# Plano de Treino: Hipertrofia + perda de gordura (ênfase em peitoral)
 
-**Perfil:** 34 anos · 182 cm · 89 kg · testosterona total 400 ng/dL
-**Divisão:** Superior / Inferior / Push / Pull / Pernas (cada músculo 2x por semana, peito 3x)
+**Perfil:** 34 anos · 182 cm · 89 kg · testosterona total 400 ng/dL · TMB ~2.000 kcal
+**Objetivo:** ganhar músculo e reduzir a gordura do peito (pseudoginecomastia, sem glândula).
+**Restrições:** hérnia umbilical pequena (<1 cm) · sem agachamento e sem prancha · treina sozinho · sem treino de glúteo.
 
-| Dia | Treino | Foco |
-|-----|--------|------|
-| Seg | A: Superior | Peito pesado (inclinado) + costas, ombro, braços |
-| Ter | B: Inferior | Quadríceps (agachamento) |
-| Qua | C: Push | Peito em volume, ombro, tríceps + cardio leve |
-| Qui | D: Pull | Costas, postura, bíceps + cardio leve |
-| Sex | E: Pernas + reforço de peito | Posterior/glúteo + pec deck leve |
-| Sáb/Dom | Descanso | Caminhada leve (8-10 mil passos) |
+| Dia | Treino |
+|-----|--------|
+| Seg | A: Superior, ênfase em peito |
+| Ter | B: Pernas (quadríceps), só máquinas + 20 min de bike |
+| Qua | C: Push (peito, ombro, tríceps) + 25 min de esteira inclinada |
+| Qui | D: Pull (costas, bíceps) + 25 min de esteira inclinada |
+| Sex | E: Posterior de coxa + reforço de peito e ombro + 20 min de esteira |
+| Sáb/Dom | Descanso ativo: 8-10 mil passos |
 
-Os exercícios, séries, repetições e descansos estão no app (`index.html`).
+Exercícios, séries, repetições e descansos estão no app (`index.html`).
+Peito: ~20 séries por semana, divididas em 3 dias.
 
-## Volume semanal de peito
-~20 séries: supino inclinado (7), supino reto (4), supino máquina (3), crossover (3), pec deck (6), paralelas (3).
+## Regras por causa da hérnia
+1. Solte o ar na fase de esforço. **Nunca prenda a respiração.**
+2. Nos exercícios grandes, pare com 2 repetições sobrando. Falha só em máquina e polia.
+3. Leg press só até ~90° no joelho; os joelhos não chegam perto da barriga.
+4. Saia de bancos e da mesa flexora **virando de lado**, sem fazer "abdominal".
+5. Sem abdominal, prancha, agachamento, stiff ou remada curvada até ter liberação médica.
+6. Dor, endurecimento ou a hérnia não voltar para dentro: pare e procure atendimento.
 
-## Como progredir (dupla progressão)
-1. Comece com uma carga que você faz no **mínimo** da faixa (ex.: 8 em "8-10").
-2. Quando fizer o **máximo** da faixa em todas as séries, suba a carga (2-5%).
-3. Intensidade: termine as séries com 1-2 repetições "no tanque" (RIR 1-2). Só isoladores na última série podem ir à falha.
-4. A cada 6-8 semanas, faça 1 semana de *deload* (mesmos exercícios, metade das séries).
-5. Anote as cargas no app para ver a evolução.
+## Treinando sozinho
+- Supino com **halteres** (se travar, solte para os lados, nunca sobre a barriga) ou **máquina**.
+- **Smith** sempre com as travas de segurança ajustadas logo acima do peito.
+- Leg press sempre com as travas acionadas.
 
-## Sobre a ginecomastia (leia com atenção)
-- **Pseudoginecomastia** (acúmulo de gordura no peito) melhora com perda de gordura e ganho de músculo. O treino ajuda bastante.
-- **Ginecomastia verdadeira** (tecido glandular, um "caroço" firme e elástico atrás do mamilo) **não diminui com exercício**. O tratamento é médico (remédio no início ou cirurgia).
-- Nenhum exercício queima gordura só do peito. O que o treino faz é desenvolver o peitoral (principalmente as porções superior e inferior) e o ombro, para melhorar o contorno, e aumentar o gasto calórico.
-- **Testosterona 400 ng/dL** está dentro da faixa normal, mas no meio para baixo. Com ginecomastia, vale levar a um **endocrinologista** e pedir: estradiol, testosterona livre, SHBG, LH, FSH e prolactina. A proporção estrogênio/testosterona importa mais que o valor isolado. Não use hormônio ou "inibidor" por conta própria.
+## Progressão
+- Dupla progressão: quando fizer o máximo da faixa de repetições em todas as séries, suba de 2 a 5% na carga.
+- Semana leve (metade das séries) a cada 6-8 semanas.
+- Anote as cargas no app.
 
-## Alimentação (o que mais pesa no resultado)
-- Com 89 kg e algum acúmulo no peito, o ideal é **recomposição**: calorias perto da manutenção (~2.600-2.800 kcal) ou um superávit pequeno (+200 kcal). Bulking "sujo" piora a gordura no peito.
-- **Proteína:** 160-190 g por dia (1,8-2,1 g/kg).
-- Meta de peso: ganhar no máximo 0,25-0,5 kg por mês; se a cintura aumentar rápido, reduza as calorias.
-- **Sono:** 7-9 h por noite. Dormir pouco derruba a testosterona.
-- Álcool baixo, peso controlado e vitamina D em dia ajudam no perfil hormonal.
+## Alimentação
+- Gasto estimado: ~2.900-3.000 kcal por dia (TMB 2.000 x atividade).
+- **Meta: ~2.500 kcal** (déficit moderado).
+  - Proteína: ~180 g
+  - Gordura: ~70 g (não abaixe muito, pela testosterona)
+  - Carboidrato: ~290 g, concentrado perto do treino
+- **Fibras + 3 L de água por dia:** evita prisão de ventre e a força para evacuar, que pressiona a hérnia.
+- Perda alvo: 0,3-0,5 kg por semana. Confira peso e cintura a cada 2 semanas e ajuste de 150 a 200 kcal se estagnar.
+- Sono: 7-8 h.
 
-## Cardio
-- 2x por semana, 15-20 min de cardio leve depois do treino (Qua e Qui) + caminhada diária.
-- Se quiser acelerar a perda de gordura, suba para 3-4x, sem sacrificar a recuperação das pernas.
+## Exames sugeridos (endocrinologista)
+Estradiol, testosterona livre, SHBG, LH, FSH e prolactina. Não use hormônios por conta própria.
 
-> Este plano é orientação geral. Se tiver lesão, dor ou condição médica, ajuste com um profissional presencial.
+## Créditos das imagens
+As fotos reais de exercícios (remada na máquina, adutora, flexora sentada, supino com halteres, supino no Smith, crossover, paralela na máquina, puxada com triângulo, remada unilateral, pulldown com braços estendidos, panturrilha no leg press e elevação lateral com halteres) são do projeto [free-exercise-db](https://github.com/yuhonas/free-exercise-db), em domínio público (Unlicense).
+
+> Este plano é orientação geral. Mostre-o ao seu médico por causa da hérnia.

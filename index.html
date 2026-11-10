@@ -419,13 +419,13 @@
 
 <header>
   <h1>Treino Hipertrofia - Matheus</h1>
-  <p>Hipertrofia 5x/semana &middot; ênfase em peitoral &middot; ~60-70 min</p>
+  <p>Hipertrofia + perda de gordura &middot; ênfase em peito &middot; ~60 min</p>
   <div class="tabs">
     <label for="tab-a" class="tab btn-a" onclick="onTabClick('A')">Seg<small>Superior</small></label>
-    <label for="tab-b" class="tab btn-b" onclick="onTabClick('B')">Ter<small>Inferior</small></label>
+    <label for="tab-b" class="tab btn-b" onclick="onTabClick('B')">Ter<small>Pernas</small></label>
     <label for="tab-c" class="tab btn-c" onclick="onTabClick('C')">Qua<small>Push</small></label>
     <label for="tab-d" class="tab btn-d" onclick="onTabClick('D')">Qui<small>Pull</small></label>
-    <label for="tab-e" class="tab btn-e" onclick="onTabClick('E')">Sex<small>Pernas</small></label>
+    <label for="tab-e" class="tab btn-e" onclick="onTabClick('E')">Sex<small>Posterior</small></label>
   </div>
   <div class="progress-wrap">
     <div class="progress-bar-bg"><div class="progress-bar-fill" id="progress-bar"></div></div>
@@ -452,67 +452,64 @@
 var workoutData = {
   A: {
     title: "SUPERIOR · ÊNFASE PEITO",
-    note: "Dia mais pesado da semana para o tronco. Nos 2 primeiros exercícios, termine cada série com 1-2 reps \"no tanque\". Aquecimento: 2 séries leves do supino antes das válidas.",
+    note: "Respire: solte o ar na fase de esforço e nunca prenda a respiração (protege a hérnia). Nos exercícios grandes, pare com 2 reps sobrando. Aqueça com 2 séries leves do supino.",
     exercises: [
-      { name: "Supino Inclinado (Halteres)", img: "img/supino-inclinado.jpg", sets: 4, reps: "6-8", rest: 150, restLabel: "2.5 min", tip: "Banco a 30°. A porção superior do peitoral é a que mais \"preenche\" o contorno do peito. Desça controlando (2-3s)." },
+      { name: "Supino Inclinado (Halteres)", img: "img/supino-inclinado.jpg", sets: 4, reps: "8-10", rest: 120, restLabel: "2 min", tip: "Banco a 30°. Se a carga travar, solte os halteres para os lados, nunca sobre a barriga. Levante-se do banco virando de lado." },
       { name: "Puxada Alta (Aberta)", img: "img/puxada-alta.jpg", sets: 4, reps: "8-10", rest: 120, restLabel: "2 min", tip: "Puxe com os cotovelos para baixo, peito em direção à barra." },
-      { name: "Supino Máquina", img: "img/supino-maquina.jpg", sets: 3, reps: "8-10", rest: 120, restLabel: "2 min", tip: "Escápulas encaixadas atrás e para baixo durante todo o movimento." },
-      { name: "Remada Baixa (Triângulo)", img: "img/remada-baixa.jpg", sets: 3, reps: "8-10", rest: 120, restLabel: "2 min", tip: "Peito estufado; segure 1s com as escápulas fechadas." },
-      { name: "Desenvolvimento Máquina", img: "img/desenvolvimento.jpg", sets: 3, reps: "8-10", rest: 90, restLabel: "1.5 min", tip: "Não trave os cotovelos no topo; controle a descida." },
-      { name: "Rosca Direta (Barra W)", img: "img/rosca-direta.jpg", sets: 3, reps: "8-10", rest: 60, restLabel: "1 min", tip: "Cotovelos colados ao corpo, sem balanço." },
+      { name: "Supino Reto na Máquina", img: "img/supino-maquina.jpg", sets: 3, reps: "8-12", rest: 120, restLabel: "2 min", tip: "Escápulas encaixadas atrás. Na máquina você pode ir mais perto da falha com segurança." },
+      { name: "Remada na Máquina Articulada (Apoio no Peito)", img: "img/remada-maquina.jpg", sets: 3, reps: "10-12", rest: 90, restLabel: "1.5 min", tip: "Peito apoiado no encosto, sem jogar o tronco. Segure 1s com as escápulas fechadas." },
+      { name: "Desenvolvimento na Máquina", img: "img/desenvolvimento.jpg", sets: 3, reps: "10-12", rest: 90, restLabel: "1.5 min", tip: "Costas coladas no encosto, sem arquear a lombar." },
+      { name: "Rosca Direta (Barra W)", img: "img/rosca-direta.jpg", sets: 3, reps: "10-12", rest: 60, restLabel: "1 min", tip: "Cotovelos colados ao corpo, sem balançar o tronco." },
       { name: "Tríceps Testa (Polia)", img: "img/triceps-testa.jpg", sets: 3, reps: "10-12", rest: 60, restLabel: "1 min", tip: "Cotovelos fixos apontando para frente." }
     ]
   },
   B: {
-    title: "INFERIOR · ÊNFASE QUADRÍCEPS",
-    note: "Pernas grandes = mais gasto calórico e melhor ambiente hormonal para o corpo todo. Não pule este dia. Aqueça bem joelhos e quadril antes do agachamento.",
+    title: "PERNAS · QUADRÍCEPS (SÓ MÁQUINAS)",
+    note: "Sem agachamento e sem abdominal. No leg press, desça só até os joelhos formarem ~90° (não deixe os joelhos chegarem perto da barriga). Depois: 20 min de bike leve.",
     exercises: [
-      { name: "Agachamento (Livre ou Smith)", img: "img/agachamento.jpg", sets: 4, reps: "6-8", rest: 180, restLabel: "3 min", tip: "Coluna neutra, desça pelo menos até a coxa paralela ao chão." },
-      { name: "Leg Press 45°", img: "img/leg-press.jpg", sets: 3, reps: "10-12", rest: 120, restLabel: "2 min", tip: "Amplitude total sem tirar a lombar do encosto." },
-      { name: "Stiff com Halteres", img: "", sets: 3, reps: "8-10", rest: 120, restLabel: "2 min", tip: "Leve o quadril para trás com os joelhos levemente flexionados; sinta alongar o posterior." },
-      { name: "Cadeira Extensora", img: "img/extensora.jpg", sets: 3, reps: "12-15", rest: 60, restLabel: "1 min", tip: "Segure 1s no topo, desça em 3s." },
-      { name: "Cadeira Flexora", img: "img/flexora.jpg", sets: 3, reps: "10-12", rest: 60, restLabel: "1 min", tip: "Quadril colado no banco, sem tirar do apoio." },
-      { name: "Panturrilha Sentado", img: "img/panturrilha.jpg", sets: 4, reps: "12-15", rest: 60, restLabel: "1 min", tip: "Alongue bem embaixo e segure 2s no topo." },
-      { name: "Prancha Isométrica", img: "img/prancha.jpg", sets: 3, reps: "45-60s", rest: 60, restLabel: "1 min", tip: "Contraia glúteo e abdômen; quadril alinhado." }
+      { name: "Leg Press 45° (até 90°)", img: "img/leg-press.jpg", sets: 4, reps: "10-12", rest: 120, restLabel: "2 min", tip: "Lombar sempre colada no encosto. Solte o ar ao empurrar. Use as travas de segurança." },
+      { name: "Cadeira Extensora", img: "img/extensora.jpg", sets: 4, reps: "12-15", rest: 60, restLabel: "1 min", tip: "Segure 1s no topo e desça em 3s." },
+      { name: "Cadeira Flexora Sentada", img: "img/flexora-sentada.jpg", sets: 3, reps: "10-12", rest: 60, restLabel: "1 min", tip: "Trave bem a almofada sobre as coxas; desça controlando." },
+      { name: "Cadeira Adutora", img: "img/adutora.jpg", sets: 3, reps: "12-15", rest: 60, restLabel: "1 min", tip: "Feche as pernas contra as almofadas da parte interna dos joelhos; volte devagar até sentir alongar." },
+      { name: "Panturrilha Sentado", img: "img/panturrilha.jpg", sets: 4, reps: "12-15", rest: 60, restLabel: "1 min", tip: "Alongue bem embaixo e segure 2s no topo." }
     ]
   },
   C: {
     title: "PUSH · PEITO, OMBRO E TRÍCEPS",
-    note: "Segundo estímulo de peito da semana, com mais volume e ângulos diferentes. Finalize com 15-20 min de cardio leve (esteira inclinada ou bike).",
+    note: "Segundo estímulo de peito, com mais volume. Treinando sozinho: halteres e Smith com as travas ajustadas logo acima do peito. Depois: 25 min de esteira inclinada.",
     exercises: [
-      { name: "Supino Reto (Barra ou Halteres)", img: "", sets: 4, reps: "6-8", rest: 150, restLabel: "2.5 min", tip: "Pés firmes no chão, arco natural, barra na linha do mamilo. Use alguém para dar segurança." },
-      { name: "Supino Inclinado (Halteres)", img: "img/supino-inclinado.jpg", sets: 3, reps: "10-12", rest: 120, restLabel: "2 min", tip: "Carga um pouco menor que segunda; foco em alongar bem embaixo." },
-      { name: "Crossover (Polia Alta para Baixa)", img: "", sets: 3, reps: "12-15", rest: 60, restLabel: "1 min", tip: "Mãos se encontram na frente do quadril: trabalha a parte inferior do peitoral, que define a linha de baixo do peito." },
-      { name: "Crucifixo Máquina (Pec Deck)", img: "img/pec-deck.jpg", sets: 3, reps: "12-15", rest: 60, restLabel: "1 min", tip: "Segure 2s com o peito contraído; última série até a falha." },
-      { name: "Elevação Lateral na Polia", img: "img/elevacao-lateral.jpg", sets: 4, reps: "12-15", rest: 60, restLabel: "1 min", tip: "Ombros largos fazem o tronco parecer em V e o peito mais definido. Sem balanço." },
-      { name: "Mergulho nas Paralelas (ou Máquina)", img: "", sets: 3, reps: "8-12", rest: 90, restLabel: "1.5 min", tip: "Incline o tronco para frente para pegar mais peito. Se não fizer 8, use a máquina assistida." },
+      { name: "Supino Reto (Halteres)", img: "img/supino-halteres.jpg", sets: 4, reps: "8-10", rest: 120, restLabel: "2 min", tip: "Se a carga travar, solte os halteres para os lados. Mais seguro que barra quando se treina sozinho." },
+      { name: "Supino Inclinado no Smith (com Travas)", img: "img/supino-smith.jpg", sets: 3, reps: "10-12", rest: 120, restLabel: "2 min", tip: "Ajuste as travas de segurança logo acima do peito antes de começar." },
+      { name: "Crossover (Polia Alta para Baixa)", img: "img/crossover.jpg", sets: 3, reps: "12-15", rest: 60, restLabel: "1 min", tip: "As mãos se encontram na frente do quadril: trabalha a parte inferior do peitoral, que define o contorno do peito." },
+      { name: "Crucifixo Máquina (Pec Deck)", img: "img/pec-deck.jpg", sets: 3, reps: "12-15", rest: 60, restLabel: "1 min", tip: "Segure 2s com o peito contraído; última série pode ir à falha." },
+      { name: "Elevação Lateral na Polia", img: "img/elevacao-lateral.jpg", sets: 4, reps: "12-15", rest: 60, restLabel: "1 min", tip: "Ombros largos fazem o peito parecer mais definido. Sem balançar o corpo." },
+      { name: "Tríceps na Máquina de Paralela (Sentado)", img: "img/paralela-maquina.jpg", sets: 3, reps: "10-12", rest: 90, restLabel: "1.5 min", tip: "Costas no encosto, empurre até estender os cotovelos sem travar." },
       { name: "Tríceps Corda na Polia", img: "img/triceps-corda.jpg", sets: 3, reps: "12-15", rest: 60, restLabel: "1 min", tip: "Abra a corda no final e estenda totalmente o cotovelo." }
     ]
   },
   D: {
     title: "PULL · COSTAS E BÍCEPS",
-    note: "Costas largas e postura aberta (face pull) ajudam muito na aparência do peito: ombros projetados para frente deixam o peito \"caído\". Finalize com 15-20 min de cardio leve.",
+    note: "Costas fortes e postura aberta (face pull) deixam o peito mais \"para cima\". Sem remada curvada (pressão na hérnia). Depois: 25 min de esteira inclinada.",
     exercises: [
-      { name: "Remada Curvada (Barra)", img: "", sets: 4, reps: "6-8", rest: 150, restLabel: "2.5 min", tip: "Tronco a ~45°, coluna neutra, puxe a barra em direção ao umbigo." },
-      { name: "Puxada Alta (Aberta)", img: "img/puxada-alta.jpg", sets: 3, reps: "10-12", rest: 90, restLabel: "1.5 min", tip: "Controle a subida, alongue bem as costas no topo." },
-      { name: "Remada Unilateral (Halter)", img: "", sets: 3, reps: "10-12", rest: 90, restLabel: "1.5 min", tip: "Apoie joelho e mão no banco; puxe o cotovelo em direção ao quadril." },
+      { name: "Puxada com Triângulo", img: "img/puxada-triangulo.jpg", sets: 4, reps: "8-10", rest: 120, restLabel: "2 min", tip: "Incline levemente o tronco para trás e puxe o triângulo em direção ao peito." },
+      { name: "Remada Baixa (Triângulo)", img: "img/remada-baixa.jpg", sets: 3, reps: "10-12", rest: 90, restLabel: "1.5 min", tip: "Peito estufado, tronco parado; segure 1s com as escápulas fechadas." },
+      { name: "Remada Unilateral (Halter, Apoiado no Banco)", img: "img/remada-unilateral.jpg", sets: 3, reps: "10-12", rest: 90, restLabel: "1.5 min", tip: "Joelho e mão apoiados no banco; puxe o cotovelo em direção ao quadril. Carga moderada." },
+      { name: "Pulldown na Polia (Braços Estendidos)", img: "img/pulldown-bracos-estendidos.jpg", sets: 3, reps: "12-15", rest: 60, restLabel: "1 min", tip: "Cotovelos quase estendidos; leve a barra até as coxas usando as costas." },
       { name: "Face Pull na Polia", img: "img/face-pull.jpg", sets: 3, reps: "15-20", rest: 60, restLabel: "1 min", tip: "Puxe em direção à testa, abrindo os cotovelos. Essencial para a postura." },
       { name: "Rosca Martelo (Halteres)", img: "img/rosca-martelo.jpg", sets: 3, reps: "10-12", rest: 60, restLabel: "1 min", tip: "Pegada neutra, sem girar o tronco." },
-      { name: "Rosca Scott (Máquina)", img: "img/rosca-scott.jpg", sets: 3, reps: "12-15", rest: 60, restLabel: "1 min", tip: "Não estenda 100% o braço no fim (proteja o tendão)." },
-      { name: "Abdominal Infra (Solo/Paralela)", img: "img/abdominal.jpg", sets: 3, reps: "15-20", rest: 60, restLabel: "1 min", tip: "Suba o quadril, não só as pernas. Desça devagar." }
+      { name: "Rosca Scott (Máquina)", img: "img/rosca-scott.jpg", sets: 3, reps: "12-15", rest: 60, restLabel: "1 min", tip: "Não estenda 100% o braço no fim (proteja o tendão)." }
     ]
   },
   E: {
-    title: "PERNAS (POSTERIOR) + REFORÇO PEITO",
-    note: "Terceiro estímulo leve de peito no fim (pec deck), só para somar volume semanal sem atrapalhar a recuperação.",
+    title: "POSTERIOR DE COXA + REFORÇO PEITO E OMBRO",
+    note: "Dia mais leve (~50 min). O pec deck aqui é só para somar volume: não vá à falha. Depois: 20 min de esteira inclinada.",
     exercises: [
-      { name: "Elevação Pélvica (Hip Thrust)", img: "", sets: 4, reps: "8-10", rest: 120, restLabel: "2 min", tip: "Costas apoiadas no banco, queixo para baixo, segure 1s no topo apertando o glúteo." },
-      { name: "Leg Press 45° (Pés Altos)", img: "img/leg-press.jpg", sets: 4, reps: "10-12", rest: 120, restLabel: "2 min", tip: "Pés mais altos na plataforma = mais glúteo e posterior." },
-      { name: "Cadeira Flexora", img: "img/flexora.jpg", sets: 4, reps: "10-12", rest: 60, restLabel: "1 min", tip: "Desça em 3s; última série com drop-set." },
+      { name: "Mesa Flexora", img: "img/flexora.jpg", sets: 4, reps: "10-12", rest: 90, restLabel: "1.5 min", tip: "Quadril colado no banco; desça em 3s. Para levantar da mesa, vire de lado." },
+      { name: "Leg Press 45° (Pés no Meio, até 90°)", img: "img/leg-press.jpg", sets: 3, reps: "12-15", rest: 120, restLabel: "2 min", tip: "Pés no meio da plataforma, lombar colada no encosto, solte o ar ao empurrar." },
       { name: "Cadeira Extensora", img: "img/extensora.jpg", sets: 3, reps: "12-15", rest: 60, restLabel: "1 min", tip: "Movimento cadenciado, sem dar tranco." },
-      { name: "Panturrilha Sentado", img: "img/panturrilha.jpg", sets: 4, reps: "15-20", rest: 60, restLabel: "1 min", tip: "Amplitude completa, pausa embaixo." },
-      { name: "Crucifixo Máquina (Pec Deck) · Reforço", img: "img/pec-deck.jpg", sets: 3, reps: "15-20", rest: 60, restLabel: "1 min", tip: "Carga moderada, foco em contração e \"bombeamento\". Não vá até a falha." },
-      { name: "Prancha Isométrica", img: "img/prancha.jpg", sets: 3, reps: "45-60s", rest: 60, restLabel: "1 min", tip: "Contraia glúteo e abdômen; quadril alinhado." }
+      { name: "Panturrilha no Leg Press", img: "img/panturrilha-leg-press.jpg", sets: 4, reps: "15-20", rest: 60, restLabel: "1 min", tip: "Só a ponta dos pés na borda da plataforma; trave de segurança sempre acionada." },
+      { name: "Crucifixo Máquina (Pec Deck) · Reforço", img: "img/pec-deck.jpg", sets: 3, reps: "15-20", rest: 60, restLabel: "1 min", tip: "Carga moderada, foco em contrair. Não vá até a falha." },
+      { name: "Elevação Lateral (Halteres)", img: "img/elevacao-lateral-halteres.jpg", sets: 3, reps: "15", rest: 60, restLabel: "1 min", tip: "Suba até a altura dos ombros, cotovelos levemente flexionados, sem balançar." }
     ]
   }
 };
@@ -604,7 +601,7 @@ function renderAll() {
 }
 
 /* ===================== ESTADO / PERSISTÊNCIA ===================== */
-var STORAGE_KEY = 'treino-state-hipertrofia-5x-v1';
+var STORAGE_KEY = 'treino-state-hipertrofia-5x-v2';
 var state = { done: {}, weight: {}, history: {} };
 
 function persist() {
