@@ -1,7 +1,7 @@
 {
-  "name": "Treino Expandido - Matheus",
+  "name": "Treino Hipertrofia - Matheus",
   "short_name": "Treino",
-  "description": "Acompanhamento de treino: Pseudoginecomastia, Máquinas e Definição",
+  "description": "Acompanhamento de treino: Hipertrofia 5x/semana com ênfase em peitoral",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
