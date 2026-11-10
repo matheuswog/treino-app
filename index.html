@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
-<title>Treino Expandido - Matheus</title>
+<title>Treino Hipertrofia - Matheus</title>
 
 <!-- PWA / iOS -->
 <link rel="manifest" href="manifest.json">
@@ -58,8 +58,9 @@
   .tabs { display: flex; gap: 6px; margin-top: 12px; }
   .tab {
     flex: 1;
+    min-width: 0;
     text-align: center;
-    padding: 10px 0;
+    padding: 7px 0;
     background: var(--card);
     border: 1px solid var(--card-border);
     border-radius: 8px;
@@ -69,22 +70,50 @@
     cursor: pointer;
     user-select: none;
     display: block;
+    line-height: 1.15;
   }
+  .tab small { display: block; font-size: 10px; font-weight: 500; opacity: .8; }
   .day-content { display: none; padding: 12px 16px; }
 
   #tab-a:checked ~ header .btn-a,
   #tab-b:checked ~ header .btn-b,
-  #tab-c:checked ~ header .btn-c {
+  #tab-c:checked ~ header .btn-c,
+  #tab-d:checked ~ header .btn-d,
+  #tab-e:checked ~ header .btn-e {
     background: var(--accent);
     color: #1a1206;
     border-color: var(--accent);
   }
   #tab-a:checked ~ main #day-a,
   #tab-b:checked ~ main #day-b,
-  #tab-c:checked ~ main #day-c {
+  #tab-c:checked ~ main #day-c,
+  #tab-d:checked ~ main #day-d,
+  #tab-e:checked ~ main #day-e {
     display: block;
   }
 
+  .day-note {
+    font-size: 12px;
+    color: var(--muted);
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    padding: 8px 10px;
+    margin-bottom: 10px;
+    line-height: 1.4;
+  }
+  .img-placeholder {
+    width: 100%;
+    height: 100%;
+    min-height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    background: #222;
+    color: var(--muted);
+  }
+  .ex-preview .img-placeholder { height: 120px; font-size: 13px; flex-direction: column; gap: 4px; }
   .card { margin-bottom: 8px; }
   .card-body {
     background: var(--card);
@@ -385,18 +414,22 @@
 <input type="radio" id="tab-a" name="workout-tabs" checked style="display:none;">
 <input type="radio" id="tab-b" name="workout-tabs" style="display:none;">
 <input type="radio" id="tab-c" name="workout-tabs" style="display:none;">
+<input type="radio" id="tab-d" name="workout-tabs" style="display:none;">
+<input type="radio" id="tab-e" name="workout-tabs" style="display:none;">
 
 <header>
-  <h1>Treino Expandido - Matheus</h1>
-  <p>Foco: Pseudoginecomastia, Máquinas e Definição &middot; ~1h20m</p>
+  <h1>Treino Hipertrofia - Matheus</h1>
+  <p>Hipertrofia 5x/semana &middot; ênfase em peitoral &middot; ~60-70 min</p>
   <div class="tabs">
-    <label for="tab-a" class="tab btn-a" onclick="onTabClick('A')">Seg (A)</label>
-    <label for="tab-b" class="tab btn-b" onclick="onTabClick('B')">Qua (B)</label>
-    <label for="tab-c" class="tab btn-c" onclick="onTabClick('C')">Sex (C)</label>
+    <label for="tab-a" class="tab btn-a" onclick="onTabClick('A')">Seg<small>Superior</small></label>
+    <label for="tab-b" class="tab btn-b" onclick="onTabClick('B')">Ter<small>Inferior</small></label>
+    <label for="tab-c" class="tab btn-c" onclick="onTabClick('C')">Qua<small>Push</small></label>
+    <label for="tab-d" class="tab btn-d" onclick="onTabClick('D')">Qui<small>Pull</small></label>
+    <label for="tab-e" class="tab btn-e" onclick="onTabClick('E')">Sex<small>Pernas</small></label>
   </div>
   <div class="progress-wrap">
     <div class="progress-bar-bg"><div class="progress-bar-fill" id="progress-bar"></div></div>
-    <div class="progress-text" id="progress">0/21 concluídos</div>
+    <div class="progress-text" id="progress">0/7 concluídos</div>
   </div>
 </header>
 
@@ -418,44 +451,80 @@
 /* ===================== DADOS DO TREINO ===================== */
 var workoutData = {
   A: {
-    title: "PEITO, OMBROS E TRÍCEPS",
+    title: "SUPERIOR · ÊNFASE PEITO",
+    note: "Dia mais pesado da semana para o tronco. Nos 2 primeiros exercícios, termine cada série com 1-2 reps \"no tanque\". Aquecimento: 2 séries leves do supino antes das válidas.",
     exercises: [
-      { name: "Supino Inclinado (Halteres)", img: "img/supino-inclinado.jpg", sets: 4, reps: "10-12", rest: 120, restLabel: "2 min", tip: "Foco clavicular e postura." },
-      { name: "Supino Máquina", img: "img/supino-maquina.jpg", sets: 4, reps: "10-12", rest: 120, restLabel: "2 min", tip: "Controle total das escápulas." },
-      { name: "Crucifixo Máquina (Pec Deck)", img: "img/pec-deck.jpg", sets: 3, reps: "12-15", rest: 60, restLabel: "1 min", tip: "Pico de contração de 2s." },
-      { name: "Elevação Lateral na Polia", img: "img/elevacao-lateral.jpg", sets: 4, reps: "12-15", rest: 90, restLabel: "1.5 min", tip: "Sem usar o corpo (balanço)." },
-      { name: "Desenvolvimento Máquina", img: "img/desenvolvimento.jpg", sets: 3, reps: "10-12", rest: 90, restLabel: "1.5 min", tip: "Controle na descida." },
-      { name: "Tríceps Corda na Polia", img: "img/triceps-corda.jpg", sets: 3, reps: "12-15", rest: 60, restLabel: "1 min", tip: "Estique todo o cotovelo no fim." },
-      { name: "Tríceps Testa (Polia)", img: "img/triceps-testa.jpg", sets: 3, reps: "12-15", rest: 60, restLabel: "1 min", tip: "Cotovelos fixos apontando pra frente." }
+      { name: "Supino Inclinado (Halteres)", img: "img/supino-inclinado.jpg", sets: 4, reps: "6-8", rest: 150, restLabel: "2.5 min", tip: "Banco a 30°. A porção superior do peitoral é a que mais \"preenche\" o contorno do peito. Desça controlando (2-3s)." },
+      { name: "Puxada Alta (Aberta)", img: "img/puxada-alta.jpg", sets: 4, reps: "8-10", rest: 120, restLabel: "2 min", tip: "Puxe com os cotovelos para baixo, peito em direção à barra." },
+      { name: "Supino Máquina", img: "img/supino-maquina.jpg", sets: 3, reps: "8-10", rest: 120, restLabel: "2 min", tip: "Escápulas encaixadas atrás e para baixo durante todo o movimento." },
+      { name: "Remada Baixa (Triângulo)", img: "img/remada-baixa.jpg", sets: 3, reps: "8-10", rest: 120, restLabel: "2 min", tip: "Peito estufado; segure 1s com as escápulas fechadas." },
+      { name: "Desenvolvimento Máquina", img: "img/desenvolvimento.jpg", sets: 3, reps: "8-10", rest: 90, restLabel: "1.5 min", tip: "Não trave os cotovelos no topo; controle a descida." },
+      { name: "Rosca Direta (Barra W)", img: "img/rosca-direta.jpg", sets: 3, reps: "8-10", rest: 60, restLabel: "1 min", tip: "Cotovelos colados ao corpo, sem balanço." },
+      { name: "Tríceps Testa (Polia)", img: "img/triceps-testa.jpg", sets: 3, reps: "10-12", rest: 60, restLabel: "1 min", tip: "Cotovelos fixos apontando para frente." }
     ]
   },
   B: {
-    title: "PERNAS E CORE",
+    title: "INFERIOR · ÊNFASE QUADRÍCEPS",
+    note: "Pernas grandes = mais gasto calórico e melhor ambiente hormonal para o corpo todo. Não pule este dia. Aqueça bem joelhos e quadril antes do agachamento.",
     exercises: [
-      { name: "Agachamento (Livre ou Smith)", img: "img/agachamento.jpg", sets: 4, reps: "10-12", rest: 120, restLabel: "2 min", tip: "Coluna neutra e força no calcanhar." },
-      { name: "Leg Press 45°", img: "img/leg-press.jpg", sets: 4, reps: "12-15", rest: 120, restLabel: "2 min", tip: "Amplitude total (joelho perto do peito)." },
-      { name: "Cadeira Extensora", img: "img/extensora.jpg", sets: 3, reps: "15", rest: 90, restLabel: "1.5 min", tip: "Movimento cadenciado (subir e descer devagar)." },
-      { name: "Cadeira Flexora", img: "img/flexora.jpg", sets: 4, reps: "12-15", rest: 90, restLabel: "1.5 min", tip: "Foco nos posteriores da coxa." },
-      { name: "Panturrilha Sentado", img: "img/panturrilha.jpg", sets: 4, reps: "15-20", rest: 60, restLabel: "1 min", tip: "Segure 2s no topo do movimento." },
-      { name: "Abdominal Infra (Solo/Paralela)", img: "img/abdominal.jpg", sets: 3, reps: "15-20", rest: 60, restLabel: "1 min", tip: "Controle na descida das pernas." },
-      { name: "Prancha Isométrica", img: "img/prancha.jpg", sets: 3, reps: "45-60s", rest: 60, restLabel: "1 min", tip: "Contraia o glúteo para estabilizar a lombar." }
+      { name: "Agachamento (Livre ou Smith)", img: "img/agachamento.jpg", sets: 4, reps: "6-8", rest: 180, restLabel: "3 min", tip: "Coluna neutra, desça pelo menos até a coxa paralela ao chão." },
+      { name: "Leg Press 45°", img: "img/leg-press.jpg", sets: 3, reps: "10-12", rest: 120, restLabel: "2 min", tip: "Amplitude total sem tirar a lombar do encosto." },
+      { name: "Stiff com Halteres", img: "", sets: 3, reps: "8-10", rest: 120, restLabel: "2 min", tip: "Leve o quadril para trás com os joelhos levemente flexionados; sinta alongar o posterior." },
+      { name: "Cadeira Extensora", img: "img/extensora.jpg", sets: 3, reps: "12-15", rest: 60, restLabel: "1 min", tip: "Segure 1s no topo, desça em 3s." },
+      { name: "Cadeira Flexora", img: "img/flexora.jpg", sets: 3, reps: "10-12", rest: 60, restLabel: "1 min", tip: "Quadril colado no banco, sem tirar do apoio." },
+      { name: "Panturrilha Sentado", img: "img/panturrilha.jpg", sets: 4, reps: "12-15", rest: 60, restLabel: "1 min", tip: "Alongue bem embaixo e segure 2s no topo." },
+      { name: "Prancha Isométrica", img: "img/prancha.jpg", sets: 3, reps: "45-60s", rest: 60, restLabel: "1 min", tip: "Contraia glúteo e abdômen; quadril alinhado." }
     ]
   },
   C: {
-    title: "COSTAS, BÍCEPS E REESTÍMULO",
+    title: "PUSH · PEITO, OMBRO E TRÍCEPS",
+    note: "Segundo estímulo de peito da semana, com mais volume e ângulos diferentes. Finalize com 15-20 min de cardio leve (esteira inclinada ou bike).",
     exercises: [
-      { name: "Puxada Alta (Aberta)", img: "img/puxada-alta.jpg", sets: 4, reps: "10-12", rest: 90, restLabel: "1.5 min", tip: "Puxe com os cotovelos para baixo." },
-      { name: "Remada Baixa (Triângulo)", img: "img/remada-baixa.jpg", sets: 4, reps: "10-12", rest: 90, restLabel: "1.5 min", tip: "Peito estufado e escápulas fechadas." },
-      { name: "Face Pull na Polia", img: "img/face-pull.jpg", sets: 3, reps: "15-20", rest: 60, restLabel: "1 min", tip: "Puxe em direção à testa. Crucial para postura." },
-      { name: "Supino Inclinado (Reestímulo)", img: "img/supino-inclinado.jpg", sets: 3, reps: "12-15", rest: 120, restLabel: "2 min", tip: "Foco estético peitoral para volume sob pseudoginecomastia." },
-      { name: "Rosca Direta (Barra W)", img: "img/rosca-direta.jpg", sets: 3, reps: "10-12", rest: 60, restLabel: "1 min", tip: "Trave o cotovelo ao lado do corpo." },
-      { name: "Rosca Martelo (Halteres)", img: "img/rosca-martelo.jpg", sets: 3, reps: "10-12", rest: 60, restLabel: "1 min", tip: "Pegada neutra para densidade do braço." },
-      { name: "Rosca Scott (Máquina)", img: "img/rosca-scott.jpg", sets: 3, reps: "12-15", rest: 60, restLabel: "1 min", tip: "Não estenda 100% o braço no fim (proteja o tendão)." }
+      { name: "Supino Reto (Barra ou Halteres)", img: "", sets: 4, reps: "6-8", rest: 150, restLabel: "2.5 min", tip: "Pés firmes no chão, arco natural, barra na linha do mamilo. Use alguém para dar segurança." },
+      { name: "Supino Inclinado (Halteres)", img: "img/supino-inclinado.jpg", sets: 3, reps: "10-12", rest: 120, restLabel: "2 min", tip: "Carga um pouco menor que segunda; foco em alongar bem embaixo." },
+      { name: "Crossover (Polia Alta para Baixa)", img: "", sets: 3, reps: "12-15", rest: 60, restLabel: "1 min", tip: "Mãos se encontram na frente do quadril: trabalha a parte inferior do peitoral, que define a linha de baixo do peito." },
+      { name: "Crucifixo Máquina (Pec Deck)", img: "img/pec-deck.jpg", sets: 3, reps: "12-15", rest: 60, restLabel: "1 min", tip: "Segure 2s com o peito contraído; última série até a falha." },
+      { name: "Elevação Lateral na Polia", img: "img/elevacao-lateral.jpg", sets: 4, reps: "12-15", rest: 60, restLabel: "1 min", tip: "Ombros largos fazem o tronco parecer em V e o peito mais definido. Sem balanço." },
+      { name: "Mergulho nas Paralelas (ou Máquina)", img: "", sets: 3, reps: "8-12", rest: 90, restLabel: "1.5 min", tip: "Incline o tronco para frente para pegar mais peito. Se não fizer 8, use a máquina assistida." },
+      { name: "Tríceps Corda na Polia", img: "img/triceps-corda.jpg", sets: 3, reps: "12-15", rest: 60, restLabel: "1 min", tip: "Abra a corda no final e estenda totalmente o cotovelo." }
+    ]
+  },
+  D: {
+    title: "PULL · COSTAS E BÍCEPS",
+    note: "Costas largas e postura aberta (face pull) ajudam muito na aparência do peito: ombros projetados para frente deixam o peito \"caído\". Finalize com 15-20 min de cardio leve.",
+    exercises: [
+      { name: "Remada Curvada (Barra)", img: "", sets: 4, reps: "6-8", rest: 150, restLabel: "2.5 min", tip: "Tronco a ~45°, coluna neutra, puxe a barra em direção ao umbigo." },
+      { name: "Puxada Alta (Aberta)", img: "img/puxada-alta.jpg", sets: 3, reps: "10-12", rest: 90, restLabel: "1.5 min", tip: "Controle a subida, alongue bem as costas no topo." },
+      { name: "Remada Unilateral (Halter)", img: "", sets: 3, reps: "10-12", rest: 90, restLabel: "1.5 min", tip: "Apoie joelho e mão no banco; puxe o cotovelo em direção ao quadril." },
+      { name: "Face Pull na Polia", img: "img/face-pull.jpg", sets: 3, reps: "15-20", rest: 60, restLabel: "1 min", tip: "Puxe em direção à testa, abrindo os cotovelos. Essencial para a postura." },
+      { name: "Rosca Martelo (Halteres)", img: "img/rosca-martelo.jpg", sets: 3, reps: "10-12", rest: 60, restLabel: "1 min", tip: "Pegada neutra, sem girar o tronco." },
+      { name: "Rosca Scott (Máquina)", img: "img/rosca-scott.jpg", sets: 3, reps: "12-15", rest: 60, restLabel: "1 min", tip: "Não estenda 100% o braço no fim (proteja o tendão)." },
+      { name: "Abdominal Infra (Solo/Paralela)", img: "img/abdominal.jpg", sets: 3, reps: "15-20", rest: 60, restLabel: "1 min", tip: "Suba o quadril, não só as pernas. Desça devagar." }
+    ]
+  },
+  E: {
+    title: "PERNAS (POSTERIOR) + REFORÇO PEITO",
+    note: "Terceiro estímulo leve de peito no fim (pec deck), só para somar volume semanal sem atrapalhar a recuperação.",
+    exercises: [
+      { name: "Elevação Pélvica (Hip Thrust)", img: "", sets: 4, reps: "8-10", rest: 120, restLabel: "2 min", tip: "Costas apoiadas no banco, queixo para baixo, segure 1s no topo apertando o glúteo." },
+      { name: "Leg Press 45° (Pés Altos)", img: "img/leg-press.jpg", sets: 4, reps: "10-12", rest: 120, restLabel: "2 min", tip: "Pés mais altos na plataforma = mais glúteo e posterior." },
+      { name: "Cadeira Flexora", img: "img/flexora.jpg", sets: 4, reps: "10-12", rest: 60, restLabel: "1 min", tip: "Desça em 3s; última série com drop-set." },
+      { name: "Cadeira Extensora", img: "img/extensora.jpg", sets: 3, reps: "12-15", rest: 60, restLabel: "1 min", tip: "Movimento cadenciado, sem dar tranco." },
+      { name: "Panturrilha Sentado", img: "img/panturrilha.jpg", sets: 4, reps: "15-20", rest: 60, restLabel: "1 min", tip: "Amplitude completa, pausa embaixo." },
+      { name: "Crucifixo Máquina (Pec Deck) · Reforço", img: "img/pec-deck.jpg", sets: 3, reps: "15-20", rest: 60, restLabel: "1 min", tip: "Carga moderada, foco em contração e \"bombeamento\". Não vá até a falha." },
+      { name: "Prancha Isométrica", img: "img/prancha.jpg", sets: 3, reps: "45-60s", rest: 60, restLabel: "1 min", tip: "Contraia glúteo e abdômen; quadril alinhado." }
     ]
   }
 };
 
-var DAY_ORDER = ["A", "B", "C"];
+var DAY_ORDER = ["A", "B", "C", "D", "E"];
+
+function thumbHtml(ex, nameAttr, big) {
+  if (ex.img) return '<img src="' + ex.img + '" alt="' + nameAttr + '" loading="lazy">';
+  return big
+    ? '<div class="img-placeholder"><span style="font-size:24px">🏋️</span><span>Toque em "Ver execução"</span></div>'
+    : '<div class="img-placeholder">🏋️</div>';
+}
 
 function videoUrl(name) {
   var q = name.replace(/[()°]/g, "").trim().replace(/\s+/g, "+");
@@ -476,7 +545,8 @@ function renderDay(day) {
   var html = '<div class="section-title-row">' +
       '<div class="section-title">' + d.title + '</div>' +
       '<button type="button" class="reset-day-btn" onclick="resetDay(\'' + day + '\')">Resetar dia</button>' +
-    '</div>';
+    '</div>' +
+    (d.note ? '<div class="day-note">' + esc(d.note) + '</div>' : '');
 
   d.exercises.forEach(function (ex, idx) {
     var id = day + '-' + idx;
@@ -488,7 +558,7 @@ function renderDay(day) {
         '<div class="card-body">' +
           '<div class="card-top" onclick="toggleCard(\'' + day + '\', ' + idx + ', event)">' +
             '<button type="button" class="ex-thumb" aria-label="Ampliar imagem" onclick="openLightbox(\'' + day + '\', ' + idx + ', event)">' +
-              '<img src="' + ex.img + '" alt="' + nameAttr + '" loading="lazy">' +
+              thumbHtml(ex, nameAttr, false) +
             '</button>' +
             '<div class="ex-info">' +
               '<span class="ex-name">' + ex.name + '</span>' +
@@ -499,7 +569,7 @@ function renderDay(day) {
           '</div>' +
           '<div class="card-details">' +
             '<button type="button" class="ex-preview" onclick="openLightbox(\'' + day + '\', ' + idx + ', event)">' +
-              '<img src="' + ex.img + '" alt="' + nameAttr + '" loading="lazy">' +
+              thumbHtml(ex, nameAttr, true) +
             '</button>' +
             '<div class="detail-actions">' +
               '<a href="' + videoUrl(ex.name) + '" target="_blank" rel="noopener" class="video-btn" onclick="event.stopPropagation()">Ver execução</a>' +
@@ -534,29 +604,11 @@ function renderAll() {
 }
 
 /* ===================== ESTADO / PERSISTÊNCIA ===================== */
-var STORAGE_KEY = 'treino-state-expandido-matheus-v2';
+var STORAGE_KEY = 'treino-state-hipertrofia-5x-v1';
 var state = { done: {}, weight: {}, history: {} };
 
 function persist() {
   try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) {}
-}
-
-function migrateOldState() {
-  try {
-    var old = localStorage.getItem('treino-state-expandido-matheus');
-    if (!old) return;
-    var oldState = JSON.parse(old);
-    Object.keys(oldState).forEach(function (key) {
-      var parts = key.split('-');
-      if (parts.length === 3) {
-        var day = parts[0], idx = parts[1], type = parts[2];
-        var id = day + '-' + idx;
-        if (type === 'done') state.done[id] = oldState[key];
-        else if (type === 'weight') state.weight[id] = oldState[key];
-      }
-    });
-    persist();
-  } catch (e) {}
 }
 
 function loadState() {
@@ -567,8 +619,6 @@ function loadState() {
       state.done = parsed.done || {};
       state.weight = parsed.weight || {};
       state.history = parsed.history || {};
-    } else {
-      migrateOldState();
     }
   } catch (e) {}
 
@@ -638,7 +688,9 @@ function openLightbox(day, idx, event) {
   if (event) event.stopPropagation();
   var ex = workoutData[day].exercises[idx];
   if (!ex) return;
-  document.getElementById('lightbox-img').src = ex.img;
+  var lbImg = document.getElementById('lightbox-img');
+  lbImg.style.display = ex.img ? '' : 'none';
+  if (ex.img) lbImg.src = ex.img;
   document.getElementById('lightbox-img').alt = ex.name;
   document.getElementById('lightbox-title').textContent = ex.name;
   document.getElementById('lightbox-tip').textContent = 'Dica: ' + ex.tip;
